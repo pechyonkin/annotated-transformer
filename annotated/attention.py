@@ -50,7 +50,9 @@ class MultiHeadedAttention(nn.Module):
         # We assume d_v always equals d_k
         self.d_k = d_model // num_attn_heads
         self.num_attn_heads = num_attn_heads
-        self.linears = clones(nn.Linear(d_model, d_model), 4)
+        self.linears = clones(
+            nn.Linear(d_model, d_model), 4
+        )  # is applied to last dimension
         self.attn = None
         self.dropout = nn.Dropout(p=dropout)
 
