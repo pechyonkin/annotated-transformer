@@ -24,7 +24,7 @@ class Decoder(nn.Module):
 
 
 class DecoderLayer(nn.Module):
-    """Decoder is made of self-attn, src-attn, and feed forward (defined below)"""
+    """Decoder is made of self-attn, src-attn, and feed forward (defined below)."""
 
     def __init__(self, size, self_attn, src_attn, feed_forward, dropout: float):
         super(DecoderLayer, self).__init__()
@@ -55,9 +55,11 @@ def subsequent_mask(size: int) -> Tensor:
 
     Returns a tensor of booleans.
 
-    We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent
-    positions. This masking, combined with fact that the output embeddings are offset by one position, ensures that the
-    predictions for position  𝑖  can depend only on the known outputs at positions less than  𝑖 .
+    We also modify the self-attention sub-layer in the decoder stack to prevent
+    positions from attending to subsequent positions. This masking, combined
+    with fact that the output embeddings are offset by one position, ensures
+    that the predictions for position  𝑖 can depend only on the known outputs at
+    positions less than  𝑖.
 
     """
     attn_shape = (1, size, size)
