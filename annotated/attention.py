@@ -16,7 +16,8 @@ def attention(
 
     Implements equation (1) from the paper.
 
-    Query, key, value are all 4D tensors of shape: (num_batches, _, num_attn_heads, d_k)
+    Query, key, value are all 4D tensors of shape:
+    (num_batches, _, num_attn_heads, d_k)
 
     Where d_k = d_model // num_attn_heads
 
@@ -63,7 +64,7 @@ class MultiHeadedAttention(nn.Module):
             # Same mask applied to all h heads.
             # insert a dimension of size one at the specified position
             mask = mask.unsqueeze(1)
-        nbatches = query.size(0)  # returns size of first dimension of the tensor
+        nbatches = query.size(0)  # returns size of 1st dimension of the tensor
 
         # 1) Do all the linear projections in batch from d_model => h x d_k
         query, key, value = [
