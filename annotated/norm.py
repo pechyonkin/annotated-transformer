@@ -13,7 +13,8 @@ class LayerNorm(nn.Module):
         self.eps = eps
 
     def forward(self, x: Tensor):
-        """Returns a tensor of same shape as input, where each value is normalized.
+        """Returns a tensor of same shape as input, where each value is
+        normalized.
 
         Normalization of each value:
         - subtract the mean (across feature dimension)

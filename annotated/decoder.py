@@ -24,7 +24,8 @@ class Decoder(nn.Module):
 
 
 class DecoderLayer(nn.Module):
-    """Decoder is made of self-attn, src-attn, and feed forward (defined below)."""
+    """Decoder is made of self-attn, src-attn, and feed forward (defined below).
+    """
 
     def __init__(self, size, self_attn, src_attn, feed_forward, dropout: float):
         super(DecoderLayer, self).__init__()
