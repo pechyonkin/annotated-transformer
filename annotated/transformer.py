@@ -18,10 +18,10 @@ from annotated.positional_encoding import PositionalEncoding
 class Generator(nn.Module):
     """Define standard linear + softmax generation step."""
 
-    def __init__(self, d_model: int, vocab: int):
+    def __init__(self, d_model: int, vocab_size: int):
         super(Generator, self).__init__()
         # project d_model input to vocab output
-        self.proj = nn.Linear(d_model, vocab)
+        self.proj = nn.Linear(d_model, vocab_size)
 
     def forward(self, x):
         # softmax along the last dimension
@@ -77,18 +77,18 @@ class EncoderDecoder(nn.Module):
 
 
 def make_model(
-    src_vocab,
-    tgt_vocab,
+    src_vocab_size: int,
+    tgt_vocab_size: int,
     num_layers: int = 6,
     d_model: int = 512,
     d_ff: int = 2048,
-    h: int = 8,
+    num_attn_heads: int = 8,
     dropout: float = 0.1,
 ) -> EncoderDecoder:
     """Helper: Construct a model from hyperparameters."""
 
     c = copy.deepcopy
-    attn = MultiHeadedAttention(num_attn_heads=h, d_model=d_model)
+    attn = MultiHeadedAttention(num_attn_heads=num_attn_heads, d_model=d_model)
     ff = PositionwiseFeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout)
     position = PositionalEncoding(d_model=d_model, dropout=dropout)
     encoder = Encoder(
@@ -111,14 +111,14 @@ def make_model(
         num_layers=num_layers,
     )
     src_embed = nn.Sequential(
-        Embeddings(d_model=d_model, vocab=src_vocab),
+        Embeddings(d_model=d_model, vocab_size=src_vocab_size),
         c(position),
     )
     tgt_embed = nn.Sequential(
-        Embeddings(d_model=d_model, vocab=tgt_vocab),
+        Embeddings(d_model=d_model, vocab_size=tgt_vocab_size),
         c(position),
     )
-    generator = Generator(d_model, tgt_vocab)
+    generator = Generator(d_model=d_model, vocab_size=tgt_vocab_size)
     model = EncoderDecoder(
         encoder=encoder,
         decoder=decoder,

@@ -9,9 +9,9 @@ class Embeddings(nn.Module):
     layers and the pre-softmax linear transformation. In the embedding layers,
     we multiply those weights by sqrt(d_model)."""
 
-    def __init__(self, d_model, vocab):
+    def __init__(self, d_model: int, vocab_size: int):
         super(Embeddings, self).__init__()
-        self.lut = nn.Embedding(vocab, d_model)
+        self.lut = nn.Embedding(vocab_size, d_model)
         self.d_model = d_model
 
     def forward(self, x):
